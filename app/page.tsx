@@ -10,8 +10,6 @@ export default function Page() {
         {
           `During my time at the UIUC, I've enjoyed visiting a variety of parks in the area, each offering its own unique charm and beauty. 
            This blog documents my visits. I am trying to visit 50 parks by the end of the semester.
-
-           If you find any issues or suggestions, please reach out.
            `
         }
       </p>
