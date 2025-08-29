@@ -3,10 +3,10 @@ import { BlogPosts } from 'app/components/posts'
 export default function Page() {
   return (
     <section>
-      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+      <h1 className="mb-8 text-2xl text-stone-800 font-semibold tracking-tighter">
         Parks @ Urbana-Champaign
       </h1>
-      <p className="mb-4">
+      <p className="mb-4 text-stone-800">
         {
           `During my time at the UIUC, I've enjoyed visiting a variety of parks in the area, each offering its own unique charm and beauty. 
            This blog documents my visits.
