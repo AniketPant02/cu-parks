@@ -1,6 +1,11 @@
 import fs from 'fs/promises'
 import path from 'path'
 
+export const metadata = {
+    title: 'List',
+    description: 'A list of parks in Urbana-Champaign.',
+}
+
 export const revalidate = 0
 
 type Row = {
@@ -67,9 +72,7 @@ export default async function ListPage() {
 
     return (
         <section className="max-w-4xl">
-            <h1 className="mb-4 text-3xl font-semibold tracking-tight">
-                Urbana-Champaign Parks List
-            </h1>
+            <h1 className="font-semibold text-2xl mb-8 tracking-tighter">List of parks</h1>
 
             <div className="overflow-x-auto rounded-2xl border border-emerald-200/60 bg-emerald-50/40 shadow-sm backdrop-blur-sm dark:border-emerald-900/40 dark:bg-emerald-900/10">
                 <table className="w-full border-collapse">

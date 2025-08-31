@@ -7,6 +7,9 @@ const navItems = {
   '/park': {
     name: 'parks',
   },
+  '/list': {
+    name: 'list',
+  },
 }
 
 export function Navbar() {
