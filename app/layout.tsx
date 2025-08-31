@@ -22,6 +22,14 @@ export const metadata: Metadata = {
     siteName: 'Parks @ Urbana-Champaign',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: "https://parks.aniketpant.me/meadowbrook_park/MeadowbrookPark3.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Meadowbrook park preview"
+      }
+    ],
   },
   robots: {
     index: true,
