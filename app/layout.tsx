@@ -42,6 +42,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'apple-mobile-web-app-title': 'Parks @ Urbana-Champaign',
+  },
 }
 
 const cx = (...classes) => classes.filter(Boolean).join(' ')
