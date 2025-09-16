@@ -31,6 +31,7 @@ export function BlogPosts() {
             </div>
           </Link>
         ))}
+        <div className="text-stone-500 text-sm">{allBlogs.length} posts</div>
     </div>
   )
 }
