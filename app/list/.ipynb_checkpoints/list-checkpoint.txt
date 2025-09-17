@@ -1,0 +1,51 @@
+Rank	Park	Approx. size (acres)	District	Visited (+ date)
+1	Crystal Lake Park	144.0	Urbana	Y
+2	Meadowbrook Park	130.0	Urbana	Y
+3	Dodds Park	104.0	Champaign	Y
+4	Centennial Park	69.6	Champaign	
+5	Weaver Park	60.0	Urbana	
+6	Dog Park/Perkins Road Site	60.0	Urbana	
+7	Heritage Park	41.6	Champaign	
+8	Porter Family Park	38.2	Champaign	
+9	Kaufman Park	29.1	Champaign	
+10	Robeson Park	24.1	Champaign	
+11	Mattis Park	22.3	Champaign	
+12	Hessel Park	22.2	Champaign	
+13	AMBUCS Park	22.0	Urbana	
+14	Zahnd Park	20.6	Champaign	
+15	Commissioners Park	20.0	Champaign	
+16	Prairie Park	20.0	Urbana	
+17	Robeson Meadows West Detention Park	19.5	Champaign	
+18	Sunset Ridge Park	19.4	Champaign	Y
+19	Morrissey Park	19.0	Champaign	
+20	Spalding Park	16.8	Champaign	
+21	Douglass Park	15.5	Champaign	
+22	Johnston Park	15.1	Champaign	
+23	Lohmann Park	15.0	Urbana	
+24	West Side Park	13.9	Champaign	
+25	Chief Shemauger Park	13.0	Urbana	
+26	Blair Park	11.0	Urbana	
+27	South Ridge Park	11.0	Urbana	
+28	Carle Park	11.0	Urbana	Y (08/25/25)
+29	Noel Park	10.8	Champaign	
+30	Human Kinetics Park	8.9	Champaign	
+31	Powell Park	8.0	Champaign	
+32	King Park	8.0	Urbana	
+33	Toalson Park	7.7	Champaign	
+34	Champaign Bark District	6.9	Champaign	
+35	Turnberry Ridge Park	6.1	Champaign	
+36	Hallbeck Park	6.0	Champaign	
+37	Larson (Wheatfield) Park	5.0	Urbana	
+38	Victory Park	5.0	Urbana	
+39	Hazel Park	4.9	Champaign	
+40	Eisner Park	4.9	Champaign	
+41	Garden Hills Park	4.5	Champaign	
+42	Bian Park	4.2	Champaign	
+43	Clark Park	4.0	Champaign	
+44	Scott Park	3.9	Champaign	Y
+45	Washington Park	3.8	Champaign	
+46	Town Center Park	3.76	Champaign	
+47	Greenbelt #1 Park	3.44	Champaign	
+48	Mullikin Park	3.3	Champaign	
+49	Leal Park	3.0	Urbana	
+50	Canaday Park	3.0	Urbana	

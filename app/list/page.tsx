@@ -1,5 +1,6 @@
 import fs from 'fs/promises'
 import path from 'path'
+import { ParksMap, type MapPoint } from './Map'
 
 export const metadata = {
     title: 'List',
@@ -14,27 +15,71 @@ type Row = {
     'Approx. size (acres)': string
     District: string
     'Visited (+ date)': string
+    lat: string
+    lon: string
 }
 
-function parseTSV(text: string): Row[] {
-    const lines = text.trim().replace(/\r\n?/g, '\n').split('\n')
+function splitCSVLine(line: string): string[] {
+    const cols: string[] = []
+    let current = ''
+    let inQuotes = false
+
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i]
+
+        if (char === '"') {
+            if (inQuotes && line[i + 1] === '"') {
+                current += '"'
+                i += 1
+            } else {
+                inQuotes = !inQuotes
+            }
+        } else if (char === ',' && !inQuotes) {
+            cols.push(current.trim())
+            current = ''
+        } else {
+            current += char
+        }
+    }
+
+    cols.push(current.trim())
+    return cols
+}
+
+function parseCSV(text: string): Row[] {
+    const rawLines = text.trim().replace(/\r\n?/g, '\n').split('\n')
+    const lines = rawLines.filter((line) => line.trim().length > 0)
     if (!lines.length) return []
-    const split = (l: string) => l.split(/\t+/)
-    const headers = split(lines[0])
+
+    const headers = splitCSVLine(lines[0])
     const rows: Row[] = []
+
     for (let i = 1; i < lines.length; i++) {
-        const cols = split(lines[i])
+        const cols = splitCSVLine(lines[i])
+        if (!cols.length) continue
+        if (cols.length < headers.length) continue
+
         const obj: Record<string, string> = {}
-        headers.forEach((h, j) => (obj[h] = (cols[j] ?? '').trim()))
+        headers.forEach((h, j) => {
+            const rawValue = cols[j] ?? ''
+            const trimmed = rawValue.trim()
+            const hasWrappedQuotes = trimmed.startsWith('"') && trimmed.endsWith('"')
+            const cleaned = hasWrappedQuotes
+                ? trimmed.slice(1, -1).replace(/""/g, '"')
+                : trimmed
+
+            obj[h] = cleaned
+        })
         rows.push(obj as Row)
     }
+
     return rows
 }
 
 async function readList(): Promise<Row[]> {
-    const filePath = path.join(process.cwd(), 'app', 'list', 'list.txt')
+    const filePath = path.join(process.cwd(), 'app', 'list', 'geocoded_list.txt')
     const buf = await fs.readFile(filePath, 'utf8')
-    return parseTSV(buf)
+    return parseCSV(buf)
 }
 
 function VisitedBadge({ value }: { value: string }) {
@@ -69,6 +114,24 @@ function VisitedBadge({ value }: { value: string }) {
 
 export default async function ListPage() {
     const data = await readList()
+    const mapPoints = data.reduce<MapPoint[]>((acc, row) => {
+        const lat = Number.parseFloat(row.lat)
+        const lon = Number.parseFloat(row.lon)
+        if (Number.isFinite(lat) && Number.isFinite(lon)) {
+            const subtitleParts: string[] = []
+            if (row.District) subtitleParts.push(row.District)
+            if (row['Approx. size (acres)']) {
+                subtitleParts.push(`${row['Approx. size (acres)']} acres`)
+            }
+            acc.push({
+                lat,
+                lon,
+                name: row.Park || `Rank ${row.Rank || '?'}`,
+                subtitle: subtitleParts.length ? subtitleParts.join(' - ') : undefined,
+            })
+        }
+        return acc
+    }, [])
 
     return (
         <section className="max-w-4xl">
@@ -108,6 +171,20 @@ export default async function ListPage() {
             <p className="mt-3 text-xs text-amber-700">
                 List of selected parks from CU. Some additional parks may be added, like Mahomet.
             </p>
+
+            {mapPoints.length > 0 && (
+                <div className="mt-10">
+                    <h2 className="text-lg font-semibold">
+                        Map of parks
+                    </h2>
+                    <div className="mt-3 rounded-2xl border border-emerald-200/60 bg-emerald-50/70 p-4 shadow-sm dark:border-emerald-900/40 dark:bg-emerald-900/10">
+                        <ParksMap points={mapPoints} />
+                        <p className="mt-2 text-xs text-amber-700">
+                            Pan and zoom to explore each park. Click a marker to see basic details.
+                        </p>
+                    </div>
+                </div>
+            )}
         </section>
     )
 }
