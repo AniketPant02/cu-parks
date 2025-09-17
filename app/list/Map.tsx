@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import maplibregl, { type StyleSpecification } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
@@ -11,9 +11,13 @@ const escapeHTML = (v: string) =>
 
 export function ParksMap({ points }: { points: MapPoint[] }) {
     const containerRef = useRef<HTMLDivElement | null>(null)
+    const mapRef = useRef<maplibregl.Map | null>(null)
+    const userMarkerRef = useRef<maplibregl.Marker | null>(null)
+    const [userLocation, setUserLocation] = useState<{ lat: number; lon: number } | null>(null)
+    const [locating, setLocating] = useState(false)
+    const [locationError, setLocationError] = useState<string | null>(null)
 
     useEffect(() => {
-
         if ((maplibregl as any).config?.WORKER_URL && maplibregl.config.WORKER_URL.trim().length === 0) {
             const workerUrl = new URL('maplibre-gl/dist/maplibre-gl-csp-worker.js', import.meta.url)
             maplibregl.config.WORKER_URL = workerUrl.toString()
@@ -39,6 +43,8 @@ export function ParksMap({ points }: { points: MapPoint[] }) {
             center: points.length ? [points[0].lon, points[0].lat] : [-88.227, 40.110],
             zoom: points.length ? 12 : 11,
         })
+
+        mapRef.current = map
 
         map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
 
@@ -83,13 +89,67 @@ export function ParksMap({ points }: { points: MapPoint[] }) {
 
         return () => {
             window.removeEventListener('resize', onResize)
+            userMarkerRef.current?.remove()
+            userMarkerRef.current = null
             map.remove()
+            mapRef.current = null
         }
     }, [points])
+
+    useEffect(() => {
+        if (!mapRef.current || !userLocation) return
+
+        if (!userMarkerRef.current) {
+            userMarkerRef.current = new maplibregl.Marker({ color: '#2563eb' })
+        }
+
+        userMarkerRef.current.setLngLat([userLocation.lon, userLocation.lat]).addTo(mapRef.current)
+        mapRef.current.easeTo({
+            center: [userLocation.lon, userLocation.lat],
+            zoom: Math.max(mapRef.current.getZoom(), 12),
+            duration: 800,
+        })
+    }, [userLocation])
+
+    const handleLocate = () => {
+        setLocationError(null)
+        if (typeof window === 'undefined' || !('geolocation' in navigator)) {
+            setLocationError('Geolocation is not supported in this browser.')
+            return
+        }
+
+        setLocating(true)
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setLocating(false)
+                setUserLocation({ lat: position.coords.latitude, lon: position.coords.longitude })
+            },
+            (error) => {
+                setLocating(false)
+                setLocationError(error.message || 'Unable to determine your location.')
+            },
+            { enableHighAccuracy: true, timeout: 10000 },
+        )
+    }
 
     return (
         <div className="relative h-80 w-full overflow-hidden rounded-2xl ring-1 ring-emerald-200/60 bg-emerald-50">
             <div ref={containerRef} className="h-full w-full" />
+            <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-start gap-2 p-3">
+                <button
+                    type="button"
+                    onClick={handleLocate}
+                    disabled={locating}
+                    className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-emerald-200/80 bg-white/90 px-3 py-1.5 text-xs font-medium text-emerald-800 shadow-sm backdrop-blur disabled:opacity-70"
+                >
+                    {locating ? 'Locating…' : userLocation ? 'Recenter to me' : 'Show my location'}
+                </button>
+                {locationError && (
+                    <span className="pointer-events-auto max-w-xs rounded-lg bg-white/85 px-2 py-1 text-[11px] text-amber-700 shadow">
+                        {locationError}
+                    </span>
+                )}
+            </div>
             <div className="pointer-events-none absolute inset-0 mix-blend-multiply opacity-[0.10]"
                 style={{
                     background:
