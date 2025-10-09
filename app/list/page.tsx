@@ -19,6 +19,11 @@ type Row = {
     lon: string
 }
 
+type DecoratedRow = Row & {
+    visited: boolean
+    visitedRaw: string
+}
+
 function splitCSVLine(line: string): string[] {
     const cols: string[] = []
     let current = ''
@@ -82,39 +87,75 @@ async function readList(): Promise<Row[]> {
     return parseCSV(buf)
 }
 
-function VisitedBadge({ value }: { value: string }) {
-    const v = (value || '').toLowerCase()
-    if (!v) {
+function isVisited(value: string): boolean {
+    const normalized = value.trim().toLowerCase()
+    if (!normalized) return false
+    if (normalized.includes('never again')) return true
+    if (/^y\b/.test(normalized)) return true
+    if (normalized.startsWith('visited')) return true
+    if (normalized.includes('✅')) return true
+    return false
+}
+
+function formatVisitedLabel(raw: string, visited: boolean): string {
+    const trimmed = raw.trim()
+    if (!trimmed) return visited ? 'Visited' : 'Not visited yet'
+    if (/^y\b/i.test(trimmed)) {
+        const rest = trimmed.replace(/^y\s*/i, '').trim()
+        return rest ? `Visited ${rest}` : 'Visited'
+    }
+    if (/^n\b/i.test(trimmed)) return 'Not visited yet'
+    return trimmed
+}
+
+function VisitedBadge({ raw, visited }: { raw: string; visited: boolean }) {
+    const normalized = raw.trim().toLowerCase()
+    if (!normalized) {
         return (
             <span className="inline-flex items-center rounded-full border border-emerald-200/40 bg-emerald-50/40 px-2 py-0.5 text-xs text-emerald-700/70">
                 —
             </span>
         )
     }
-    if (v.includes('never again')) {
+    if (normalized.includes('never again')) {
         return (
             <span className="inline-flex items-center rounded-full border border-red-200 bg-red-50 px-2 py-0.5 text-xs font-medium text-red-700">
                 🔥 never again
             </span>
         )
     }
-    if (v.startsWith('y')) {
+    if (visited) {
         return (
             <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">
-                ✅ {value.replace(/^y\s*/i, 'Visited ')}
+                ✅ {formatVisitedLabel(raw, true)}
+            </span>
+        )
+    }
+    if (normalized.startsWith('n')) {
+        return (
+            <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50/80 px-2 py-0.5 text-xs font-medium text-amber-700">
+                ⏳ Not visited yet
             </span>
         )
     }
     return (
         <span className="inline-flex items-center rounded-full border border-emerald-200/40 bg-emerald-50/40 px-2 py-0.5 text-xs text-emerald-700/70">
-            {value}
+            {raw}
         </span>
     )
 }
 
 export default async function ListPage() {
     const data = await readList()
-    const mapPoints = data.reduce<MapPoint[]>((acc, row) => {
+    const rows: DecoratedRow[] = data.map((row) => {
+        const visitedRaw = (row['Visited (+ date)'] || '').trim()
+        return {
+            ...row,
+            visitedRaw,
+            visited: isVisited(visitedRaw),
+        }
+    })
+    const mapPoints = rows.reduce<MapPoint[]>((acc, row) => {
         const lat = Number.parseFloat(row.lat)
         const lon = Number.parseFloat(row.lon)
         if (Number.isFinite(lat) && Number.isFinite(lon)) {
@@ -128,6 +169,8 @@ export default async function ListPage() {
                 lon,
                 name: row.Park || `Rank ${row.Rank || '?'}`,
                 subtitle: subtitleParts.length ? subtitleParts.join(' - ') : undefined,
+                visited: row.visited,
+                visitedLabel: formatVisitedLabel(row.visitedRaw, row.visited),
             })
         }
         return acc
@@ -145,11 +188,12 @@ export default async function ListPage() {
                             <th>Park</th>
                             <th className="w-44">Approx. size (acres)</th>
                             <th className="w-32">District</th>
+                            <th className="w-36">Visited</th>
                         </tr>
                     </thead>
 
                     <tbody className="text-sm text-emerald-950/90 dark:text-emerald-50">
-                        {data.map((row, i) => (
+                        {rows.map((row, i) => (
                             <tr
                                 key={`${row.Rank}-${row.Park}-${i}`}
                                 className="odd:bg-white/60 even:bg-emerald-50/60 hover:bg-emerald-100/60 transition-colors dark:odd:bg-emerald-950/30 dark:even:bg-emerald-900/30 dark:hover:bg-emerald-800/40"
@@ -162,6 +206,9 @@ export default async function ListPage() {
                                     {row['Approx. size (acres)'] || '—'}
                                 </td>
                                 <td className="px-4 py-2">{row.District || '—'}</td>
+                                <td className="px-4 py-2">
+                                    <VisitedBadge raw={row.visitedRaw} visited={row.visited} />
+                                </td>
                             </tr>
                         ))}
                     </tbody>

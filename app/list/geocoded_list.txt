@@ -1,51 +1,51 @@
 Rank,Park,Approx. size (acres),District,Visited (+ date),lat,lon
 1,Crystal Lake Park,144.0,Urbana,Y,40.1222944,-88.2089335
 2,Meadowbrook Park,130.0,Urbana,Y,40.0799962,-88.2045857
-3,Dodds Park,104.0,Champaign,Y,40.1318431,-88.2822814
-4,Centennial Park,69.6,Champaign,,40.1040472,-88.2856114
-5,Weaver Park,60.0,Urbana,,40.1096091,-88.1791467
-6,Dog Park/Perkins Road Site,60.0,Urbana,,40.1262222,-88.1885556
-7,Heritage Park,41.6,Champaign,,40.124156,-88.2836144
-8,Porter Family Park,38.2,Champaign,,40.0862117,-88.3306022
-9,Kaufman Park,29.1,Champaign,,40.1159623,-88.2881177
-10,Robeson Park,24.1,Champaign,,40.0906636,-88.2923045
-11,Mattis Park,22.3,Champaign,,40.0873197,-88.2525303
-12,Hessel Park,22.2,Champaign,,40.0996363,-88.2505129
-13,AMBUCS Park,22.0,Urbana,,40.1170423,-88.1934008
-14,Zahnd Park,20.6,Champaign,,40.0817253,-88.3125575
-15,Commissioners Park,20.0,Champaign,,40.1065000,-88.3275000
-16,Prairie Park,20.0,Urbana,,40.1066552,-88.1850987
-17,Robeson Meadows West Detention Park,19.5,Champaign,,40.0785000,-88.2965556
+3,Dodds Park,104.0,Champaign,N,40.1318431,-88.2822814
+4,Centennial Park,69.6,Champaign,Y,40.1040472,-88.2856114
+5,Weaver Park,60.0,Urbana,N,40.1096091,-88.1791467
+6,Dog Park/Perkins Road Site,60.0,Urbana,N,40.1262222,-88.1885556
+7,Heritage Park,41.6,Champaign,Y,40.124156,-88.2836144
+8,Porter Family Park,38.2,Champaign,Y,40.0862117,-88.3306022
+9,Kaufman Park,29.1,Champaign,N,40.1159623,-88.2881177
+10,Robeson Park,24.1,Champaign,N,40.0906636,-88.2923045
+11,Mattis Park,22.3,Champaign,N,40.0873197,-88.2525303
+12,Hessel Park,22.2,Champaign,Y,40.0996363,-88.2505129
+13,AMBUCS Park,22.0,Urbana,N,40.1170423,-88.1934008
+14,Zahnd Park,20.6,Champaign,Y,40.0817253,-88.3125575
+15,Commissioners Park,20.0,Champaign,N,40.1065000,-88.3275000
+16,Prairie Park,20.0,Urbana,Y,40.1066552,-88.1850987
+17,Robeson Meadows West Detention Park,19.5,Champaign,N,40.0785000,-88.2965556
 18,Sunset Ridge Park,19.4,Champaign,Y,40.1330729,-88.3135752
-19,Morrissey Park,19.0,Champaign,,40.0856727,-88.265378
-20,Spalding Park,16.8,Champaign,,40.1244128,-88.2516363
-21,Douglass Park,15.5,Champaign,,40.124453,-88.2305142
-22,Johnston Park,15.1,Champaign,,40.1081944,-88.3033333
-23,Lohmann Park,15.0,Urbana,,40.0954249,-88.1836184
-24,West Side Park,13.9,Champaign,,40.1172841,-88.2484743
-25,Chief Shemauger Park,13.0,Urbana,,40.1213993,-88.1971901
-26,Blair Park,11.0,Urbana,,40.1000942,-88.2060641
-27,South Ridge Park,11.0,Urbana,,40.079879,-88.1821393
+19,Morrissey Park,19.0,Champaign,N,40.0856727,-88.265378
+20,Spalding Park,16.8,Champaign,Y,40.1244128,-88.2516363
+21,Douglass Park,15.5,Champaign,N,40.124453,-88.2305142
+22,Johnston Park,15.1,Champaign,N,40.1081944,-88.3033333
+23,Lohmann Park,15.0,Urbana,Y,40.0954249,-88.1836184
+24,West Side Park,13.9,Champaign,N,40.1172841,-88.2484743
+25,Chief Shemauger Park,13.0,Urbana,Y,40.1213993,-88.1971901
+26,Blair Park,11.0,Urbana,Y,40.1000942,-88.2060641
+27,South Ridge Park,11.0,Urbana,Y,40.079879,-88.1821393
 28,Carle Park,11.0,Urbana,Y (08/25/25),40.1038577,-88.2114536
-29,Noel Park,10.8,Champaign,,40.0794521,-88.2616233
-30,Human Kinetics Park,8.9,Champaign,,40.131782,-88.2400597
-31,Powell Park,8.0,Champaign,,40.1229197,-88.2997998
-32,King Park,8.0,Urbana,,40.1219522,-88.2213035
-33,Toalson Park,7.7,Champaign,,40.1525396,-88.2521852
-34,Champaign Bark District,6.9,Champaign,,40.0823384,-88.3291524
-35,Turnberry Ridge Park,6.1,Champaign,,40.1056723,-88.3082642
-36,Hallbeck Park,6.0,Champaign,,40.079386,-88.2947573
-37,Larson (Wheatfield) Park,5.0,Urbana,,40.0871389,-88.1946667
-38,Victory Park,5.0,Urbana,,40.1119397,-88.1970591
-39,Hazel Park,4.9,Champaign,,40.1279204,-88.2447004
-40,Eisner Park,4.9,Champaign,,40.1173345,-88.2680702
-41,Garden Hills Park,4.5,Champaign,,40.137799,-88.2736793
-42,Bian Park,4.2,Champaign,,40.0977947,-88.3011953
-43,Clark Park,4.0,Champaign,,40.1072714,-88.2625034
-44,Scott Park,3.9,Champaign,Y,40.1120387,-88.2362302
-45,Washington Park,3.8,Champaign,,40.1060461,-88.2361803
-46,Town Center Park,3.76,Champaign,,40.1445627,-88.2497
-47,Greenbelt #1 Park,3.44,Champaign,,40.1205653,-88.2858467
-48,Mullikin Park,3.3,Champaign,,40.0895114,-88.320754
-49,Leal Park,3.0,Urbana,,40.1156695,-88.210398
-50,Canaday Park,3.0,Urbana,,40.1106776,-88.1880405
+29,Noel Park,10.8,Champaign,N,40.0794521,-88.2616233
+30,Human Kinetics Park,8.9,Champaign,N,40.131782,-88.2400597
+31,Powell Park,8.0,Champaign,N,40.1229197,-88.2997998
+32,King Park,8.0,Urbana,N,40.1219522,-88.2213035
+33,Toalson Park,7.7,Champaign,N,40.1525396,-88.2521852
+34,Champaign Bark District,6.9,Champaign,Y,40.0823384,-88.3291524
+35,Turnberry Ridge Park,6.1,Champaign,N,40.1056723,-88.3082642
+36,Hallbeck Park,6.0,Champaign,N,40.079386,-88.2947573
+37,Larson (Wheatfield) Park,5.0,Urbana,Y,40.0871389,-88.1946667
+38,Victory Park,5.0,Urbana,N,40.1119397,-88.1970591
+39,Hazel Park,4.9,Champaign,N,40.1279204,-88.2447004
+40,Eisner Park,4.9,Champaign,N,40.1173345,-88.2680702
+41,Garden Hills Park,4.5,Champaign,N,40.137799,-88.2736793
+42,Bian Park,4.2,Champaign,N,40.0977947,-88.3011953
+43,Clark Park,4.0,Champaign,N,40.1072714,-88.2625034
+44,Scott Park,3.9,Champaign,N,40.1120387,-88.2362302
+45,Washington Park,3.8,Champaign,N,40.1060461,-88.2361803
+46,Town Center Park,3.76,Champaign,N,40.1445627,-88.2497
+47,Greenbelt #1 Park,3.44,Champaign,N,40.1205653,-88.2858467
+48,Mullikin Park,3.3,Champaign,Y,40.0895114,-88.320754
+49,Leal Park,3.0,Urbana,N,40.1156695,-88.210398
+50,Canaday Park,3.0,Urbana,N,40.1106776,-88.1880405

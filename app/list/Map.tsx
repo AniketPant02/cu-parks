@@ -4,7 +4,14 @@ import { useEffect, useRef, useState } from 'react'
 import maplibregl, { type StyleSpecification } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 
-export type MapPoint = { lat: number; lon: number; name: string; subtitle?: string }
+export type MapPoint = {
+    lat: number
+    lon: number
+    name: string
+    subtitle?: string
+    visited?: boolean
+    visitedLabel?: string
+}
 
 const escapeHTML = (v: string) =>
     v.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
@@ -54,23 +61,34 @@ export function ParksMap({ points }: { points: MapPoint[] }) {
             if (!Number.isFinite(p.lat) || !Number.isFinite(p.lon)) return
 
             const el = document.createElement('div')
-            el.className = 'cu-marker'
+            const isVisited = Boolean(p.visited)
+            const markerColor = isVisited ? '#047857' : '#f97316'
+            const strokeColor = isVisited ? '#065f46' : '#c2410c'
+            const haloColor = isVisited ? '#0f766e' : '#fb923c'
+            el.className = `cu-marker ${isVisited ? 'cu-marker--visited' : 'cu-marker--not-visited'}`
             el.innerHTML = `
               <svg width="34" height="46" viewBox="0 0 34 46" aria-hidden="true">
                 <defs>
                   <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#064e3b" flood-opacity=".25"/>
+                    <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="${haloColor}" flood-opacity=".25"/>
                   </filter>
                 </defs>
                 <path filter="url(#shadow)"
                   d="M17 44c6-9 15-16 15-26C32 8.82 25.18 2 17 2S2 8.82 2 18c0 10 9 17 15 26Z"
-                  fill="#047857" stroke="#065f46" stroke-width="1.25"/>
+                  fill="${markerColor}" stroke="${strokeColor}" stroke-width="1.25"/>
                 <circle cx="17" cy="18" r="6.5" fill="#ffffff"/>
               </svg>`
+            const visitedCopy =
+                typeof p.visitedLabel === 'string' && p.visitedLabel.trim().length > 0
+                    ? escapeHTML(p.visitedLabel.trim())
+                    : isVisited
+                    ? 'Visited'
+                    : 'Not visited yet'
             const popupHTML = `
               <div class="cu-popup">
                 <div class="cu-popup-title">${escapeHTML(p.name)}</div>
                 ${p.subtitle ? `<div class="cu-popup-sub">${escapeHTML(p.subtitle)}</div>` : ''}
+                ${visitedCopy ? `<div class="cu-popup-visit">${visitedCopy}</div>` : ''}
               </div>
             `
             new maplibregl.Marker({ element: el, anchor: 'bottom' })
@@ -149,6 +167,16 @@ export function ParksMap({ points }: { points: MapPoint[] }) {
                         {locationError}
                     </span>
                 )}
+                <div className="pointer-events-auto inline-flex items-center gap-3 rounded-full border border-emerald-200/80 bg-white/90 px-3 py-1.5 text-[11px] font-medium text-emerald-900 shadow-sm">
+                    <span className="flex items-center gap-1.5">
+                        <span className="block h-2.5 w-2.5 rounded-full border border-emerald-700/70 bg-emerald-600" />
+                        Visited
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                        <span className="block h-2.5 w-2.5 rounded-full border border-amber-700/70 bg-amber-500" />
+                        Not visited
+                    </span>
+                </div>
             </div>
             <div className="pointer-events-none absolute inset-0 mix-blend-multiply opacity-[0.10]"
                 style={{
@@ -195,6 +223,12 @@ export function ParksMap({ points }: { points: MapPoint[] }) {
                     margin-top: 2px;
                     color: #92400e; /* amber-800 */
                     font-size: 0.78rem;
+                }
+                .cu-popup-visit {
+                    margin-top: 6px;
+                    color: #065f46; /* emerald-700 */
+                    font-size: 0.75rem;
+                    font-weight: 600;
                 }
 
                 /* Custom marker base (for hover scale) */
