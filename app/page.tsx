@@ -13,6 +13,13 @@ export default function Page() {
            `
         }
       </p>
+      <p className="mb-4 text-stone-800">
+        <b>Update: </b>
+        {
+          `Originally, this blog began as a personal challenge to visit 50 parks during FA2025 at UIUC. Over time, it evolved into a more general blog of key events during the FA2025 semester. I might remove these later.
+           `
+        }
+      </p>
       <div className="my-8">
         <BlogPosts />
       </div>
