@@ -53,6 +53,14 @@ function Code({ children, ...props }) {
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
 }
 
+function Quote({ children }) {
+  return (
+    <blockquote className="my-6 border-l-4 border-zinc-700 pl-4 italic text-zinc-300">
+      {children}
+    </blockquote>
+  )
+}
+
 function slugify(str) {
   return str
     .toString()
@@ -97,6 +105,8 @@ let components = {
   a: CustomLink,
   code: Code,
   Table,
+  Quote, // use as <Quote>...</Quote> in MDX
+  blockquote: Quote, // markdown `>` blockquotes use this too
 }
 
 export function CustomMDX(props) {
